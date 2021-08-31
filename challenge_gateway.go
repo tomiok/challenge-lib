@@ -34,15 +34,15 @@ func FindChallenge(level, challengeType string) string {
 		resLevel, _ := jsonparser.GetString(value, "level")
 
 		sb.WriteString(ct)
-		sb.WriteString(", ")
+		sb.WriteString(",")
 		sb.WriteString(desc)
-		sb.WriteString(", ")
+		sb.WriteString(",")
 		sb.WriteString(resLevel)
 	})
 
 	if err != nil {
 		log.Println(err.Error())
-		return "cannot get any challenge :(, body perser error"
+		return "cannot get any challenge :(, body parser error"
 	}
 
 	return sb.String()
