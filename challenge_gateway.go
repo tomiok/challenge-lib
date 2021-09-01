@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 const baseURL = "https://challenbot.herokuapp.com/challenges?level=%s&type=%s"
@@ -27,24 +26,15 @@ func FindChallenge(level, challengeType string) string {
 	buf := new(bytes.Buffer)
 	_, _ = buf.ReadFrom(body)
 	b := buf.Bytes()
-	var sb strings.Builder
 
-	ct, err := jsonparser.GetString(b, "challenge_type")
 	desc, err := jsonparser.GetString(b, "description")
-	resLevel, err := jsonparser.GetString(b, "level")
-
-	sb.WriteString(ct)
-	sb.WriteString(",")
-	sb.WriteString(desc)
-	sb.WriteString(",")
-	sb.WriteString(resLevel)
 
 	if err != nil {
 		log.Println(err.Error())
 		return "cannot get any challenge :(, body parser error"
 	}
 
-	return sb.String()
+	return desc
 }
 
 func buildRequest(level, challenge string) *http.Request {
